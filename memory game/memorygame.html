@@ -1,0 +1,151 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        let back = "https://i0.wp.com/benjamin-isd.net/wp-content/uploads/2018/09/patterns-png-transparent-8.png?ssl=1",
+            ninja ="https://cdn-icons-png.flaticon.com/128/5896/5896081.png",
+            star = "https://cdn-icons-png.flaticon.com/512/5896/5896091.png",
+            singleknife = "https://cdn-icons-png.flaticon.com/512/5896/5896098.png",
+            twoknives = "https://cdn-icons-png.flaticon.com/512/5896/5896131.png",
+            sword = "https://cdn-icons-png.flaticon.com/512/5896/5896230.png",
+            bomb = "https://cdn-icons-png.flaticon.com/512/5896/5896168.png",
+            poison = "https://cdn-icons-png.flaticon.com/512/5896/5896533.png",
+            mountain = "https://cdn-icons-png.flaticon.com/512/5896/5896852.png";
+        let icons = [ninja, star, singleknife, twoknives, sword, bomb, poison, mountain];
+        let open = [[false,false,false,false], [false,false,false,false], [false,false,false,false], [false,false,false,false]];
+        let hidden = 
+        [
+            [ninja, star, mountain, sword],
+            [singleknife, ninja, sword, twoknives],
+            [twoknives, singleknife, star,bomb],
+            [poison,bomb,poison,mountain]
+        ];   // constructing the playing field..
+
+        let current = [];
+
+        $("document").ready(function(){
+            $("div img").attr("style",
+            "background-color: grey;\n" +
+            "border-style: solid;\n" + 
+            "box-shadow: 2px 2px 0;\n" +
+            "border-color: purple;\n" +
+            "border-radius: 10%;\"");
+
+            $("#reset").click(function(){ // when the "reset" button is pressed, it rotates and calls function reset to shuffle and start the game over.
+                this.animate({
+                    transform: 'rotate(360deg)'
+                }, 300);
+                reset();
+            });
+
+            $("div img").click(function(){
+                if(current.length===2) 
+                    returnBack();
+                this.animate({height: '75px'}, 100);
+                this.src = hidden[parseInt(this.id.split("")[0])][parseInt(this.id.split("")[1])];
+                if(current.indexOf(this.id)===-1) current.push(this.id);
+            });
+
+            function reset(){
+
+                $("div img").attr("src", back);
+                open = [
+                    [false,false,false,false],
+                    [false,false,false,false],
+                    [false,false,false,false],
+                    [false,false,false,false]
+                ];
+                while(current.length!==0) current.pop();
+                shuffle();
+            }
+
+            function returnBack(){
+                let id1 = current.pop().split(""), id2 = current.pop().split("");
+                id1 = [parseInt(id1[0]), parseInt(id1[1])];
+                id2 = [parseInt(id2[0]), parseInt(id2[1])];
+                if(hidden[id1[0]][id1[1]] === hidden[id2[0]][id2[1]] && (id1[0]!==id2[0] || id1[1]!==id2[1])){
+                    open[id1[0]][id1[1]] = true;
+                    open[id2[0]][id2[1]] = true;
+                }
+
+                for(let i=0;i<4;i++){
+                    for(let j=0;j<4;j++){
+                        if(!open[i][j])
+                            $("#" +i+j+"").attr("src", back);
+                    }
+                }
+                while(current.length!==0) current.pop();
+            }
+
+            function shuffle(){
+
+                for(let i=0;i<4;i++){
+                    for(let j=0;j<4;j++){
+                        let x = Math.floor(Math.random()*4), y = Math.floor(Math.random()*4);
+                        let temp = hidden[i][j];
+                        hidden[i][j] = hidden[x][y];
+                        hidden[x][y] = temp;
+                    }
+                }
+            }
+
+            reset();
+
+        })
+
+
+    </script>
+</head>
+
+    <style>
+        body{
+            background: url("wall4.png") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            width:500px;
+            margin:auto;
+        }
+    </style>
+
+<body>
+    <img src="logo.png" style="display: block;" width="450">
+    <br>
+    <div style="border-style: solid; border-color: rgb(18, 37, 56); border-radius: 5%; width: 450px; height: 450px; padding-top: 16px; padding-left: 16px; background-color: rgb(15, 28, 32); display: inline-block">
+        <div>
+            <img id="00" src="" width="100px" height="100px">
+            <img id="01" src="" width="100px" height="100px">
+            <img id="02" src="" width="100px" height="100px">
+            <img id="03" src="" width="100px" height="100px">
+        </div>
+        <div>
+            <img id="10" src="" width="100px" height="100px">
+            <img id="11" src="" width="100px" height="100px">
+            <img id="12" src="" width="100px" height="100px">
+            <img id="13" src="" width="100px" height="100px">
+        </div>
+        <div>
+            <img id="20" src="" width="100px" height="100px">
+            <img id="21" src="" width="100px" height="100px">
+            <img id="22" src="" width="100px" height="100px">
+            <img id="23" src="" width="100px" height="100px">
+        </div>
+        <div>
+            <img id="30" src="" width="100px" height="100px">
+            <img id="31" src="" width="100px" height="100px">
+            <img id="32" src="" width="100px" height="100px">
+            <img id="33" src="" width="100px" height="100px">
+        </div>
+    </div>
+
+    <br>
+    
+    <img id="reset" src="reload-icon-15.png" width="100px" height="100px"
+         style="margin: auto 180px;">
+</body>
+
+</html>
