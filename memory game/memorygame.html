@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         
-        // i put links to public photos in each var here
+        //  links to public photos in each var here, can be changed with anything else
         let back = "https://i0.wp.com/benjamin-isd.net/wp-content/uploads/2018/09/patterns-png-transparent-8.png?ssl=1",
             ninja ="https://cdn-icons-png.flaticon.com/128/5896/5896081.png",
             star = "https://cdn-icons-png.flaticon.com/512/5896/5896091.png",
@@ -30,7 +30,7 @@
 
         let current = [];
 
-        $("document").ready(function(){
+        $("document").ready(function(){ // on page opening, when the document is ready we set style to the site.
             $("div img").attr("style",
             "background-color: grey;\n" +
             "border-style: solid;\n" + 
@@ -67,7 +67,8 @@
                 shuffle(); // using a shuffle method we are setting the characters at a random place in the array, every game, 
                 // to make the game more fun (: 
             }
-
+            
+            // a function that is going to check if the selected items have the same background
             function returnBack(){
                 let id1 = current.pop().split(""), id2 = current.pop().split("");
                 id1 = [parseInt(id1[0]), parseInt(id1[1])];
