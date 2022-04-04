@@ -47,8 +47,8 @@
 
             $("div img").click(function(){
                 if(current.length===2) 
-                    returnBack();
-                this.animate({height: '75px'}, 100);
+                    returnBack(); // calling returnback function
+                this.animate({height: '75px'}, 100); // animating the movement of each square, making a "flip" animation on each click of a new square
                 this.src = hidden[parseInt(this.id.split("")[0])][parseInt(this.id.split("")[1])];
                 if(current.indexOf(this.id)===-1) current.push(this.id);
             });
@@ -57,18 +57,17 @@
                 // characters are hidden.
 
                 $("div img").attr("src", back);
-                open = [
+                open = [    // hide all squares
                     [false,false,false,false],
                     [false,false,false,false],
                     [false,false,false,false],
                     [false,false,false,false]
                 ];
-                while(current.length!==0) current.pop();
+                while(current.length!==0) current.pop(); // empty out array "current"
                 shuffle(); // using a shuffle method we are setting the characters at a random place in the array, every game, 
                 // to make the game more fun (: 
             }
             
-            // a function that is going to check if the selected items have the same background
             function returnBack(){
                 let id1 = current.pop().split(""), id2 = current.pop().split("");
                 id1 = [parseInt(id1[0]), parseInt(id1[1])];
